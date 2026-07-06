@@ -1,0 +1,63 @@
+services:
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: trello-backend
+
+    expose:
+      - "8000"
+
+    env_file:
+      - .env.docker
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:17
+
+    container_name: trello-postgres
+
+    environment:
+      POSTGRES_DB: trello_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+    restart: unless-stopped
+  
+  nginx:
+    image: nginx:latest
+
+    container_name: trello-nginx
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+
+    depends_on:
+      - backend
+
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

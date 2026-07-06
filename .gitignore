@@ -9,6 +9,7 @@ venv/
 
 # Environment Variables
 .env
+.env.docker
 
 # Alembic cache
 *.pyc
@@ -25,8 +26,16 @@ venv/
 # Coverage
 .coverage
 htmlcov/
+.coverage.*
 
 # Logs
 *.log
 
+# Docker
+*.pid
+
+# IDE
+.idea/
+
+# Project Notes
 PROJECT_MASTER.md
