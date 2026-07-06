@@ -1,5 +1,12 @@
 # Trello Capstone Backend
 
+![Python](https://img.shields.io/badge/Python-3.14-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.116-green)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-blue)
+![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED)
+![Tests](https://img.shields.io/badge/Tests-68%20Passing-success)
+![License](https://img.shields.io/badge/License-Educational-lightgrey)
+
 A RESTful backend API inspired by Trello, built with **FastAPI**, **SQLAlchemy**, and **PostgreSQL**. The project provides secure authentication, collaborative boards, invitations, sections, ticket management, and comprehensive automated testing.
 
 ---
@@ -55,22 +62,25 @@ A RESTful backend API inspired by Trello, built with **FastAPI**, **SQLAlchemy**
 
 ---
 
-# Tech Stack
+## Tech Stack
 
-* Python 3.14
-* FastAPI
-* SQLAlchemy ORM
-* PostgreSQL
-* Alembic
-* Pydantic v2
-* JWT Authentication
-* Pytest
+- Python 3.14
+- FastAPI
+- SQLAlchemy ORM
+- PostgreSQL 17
+- Alembic
+- Pydantic v2
+- JWT Authentication
+- Pytest
+- Docker
+- Docker Compose
+- Nginx
 
 ---
 
-# Project Structure
+## Project Structure
 
-```
+```text
 app/
 ├── api/
 ├── core/
@@ -88,8 +98,14 @@ tests/
 ├── integration/
 ├── unit/
 
-.env
+Dockerfile
+docker-compose.yml
+nginx.conf
+Makefile
+
 .env.example
+.env.production.example
+
 requirements.txt
 README.md
 ```
@@ -146,6 +162,46 @@ pip install -r requirements.txt
 
 ---
 
+## Running with Docker
+
+Build and start all services
+
+```bash
+docker compose up --build
+```
+
+Run in detached mode
+
+```bash
+docker compose up -d
+```
+
+Stop all containers
+
+```bash
+docker compose down
+```
+
+The application will be available through Nginx at:
+
+```
+http://localhost
+```
+
+Swagger UI
+
+```
+http://localhost/docs
+```
+
+The Docker Compose stack includes:
+
+- FastAPI (Uvicorn)
+- PostgreSQL 17
+- Nginx Reverse Proxy
+
+---
+
 # Environment Variables
 
 Create a `.env` file in the project root.
@@ -194,7 +250,7 @@ alembic current
 
 ---
 
-# Running the Application
+## Running Locally
 
 Start the FastAPI server
 
@@ -266,33 +322,33 @@ pytest --cov=app --cov-report=term-missing
 
 ---
 
-# Testing Summary
+## Testing Summary
 
 ### Integration Tests
 
-* Authentication
-* Boards
-* Board Members
-* Invitations
-* Sections
-* Tickets
+- Authentication
+- Boards
+- Board Members
+- Invitations
+- Sections
+- Tickets
 
-**45 Integration Tests**
+**43 Integration Tests**
 
 ### Unit Tests
 
-* AuthService
-* BoardService
-* InvitationService
-* SectionService
-* TicketService
+- AuthService
+- BoardService
+- InvitationService
+- SectionService
+- TicketService
 
-**23 Unit Tests**
+**25 Unit Tests**
 
 ### Overall
 
-* **68 Automated Tests**
-* **All tests passing**
+- ✅ 68 Automated Tests
+- ✅ All Tests Passing
 
 ---
 
@@ -330,53 +386,80 @@ alembic downgrade -1
 
 ---
 
-# API Architecture
+## Architecture
 
-```
-Client
-   │
-   ▼
-FastAPI Router
-   │
-   ▼
-Service Layer
-   │
-   ▼
-Repository Layer
-   │
-   ▼
-SQLAlchemy ORM
-   │
-   ▼
-PostgreSQL
+```text
+                Browser
+                    │
+                    ▼
+              Nginx (Port 80)
+                    │
+                    ▼
+          FastAPI + Uvicorn
+                    │
+                    ▼
+             Service Layer
+                    │
+                    ▼
+           Repository Layer
+                    │
+                    ▼
+            SQLAlchemy ORM
+                    │
+                    ▼
+             PostgreSQL 17
 ```
 
 ---
 
-# Project Highlights
+## Project Highlights
 
-* Layered architecture
-* Repository pattern
-* Service layer for business logic
-* JWT authentication
-* Role-based authorization
-* RESTful API design
-* Alembic migrations
-* PostgreSQL
-* Comprehensive unit testing
-* Comprehensive integration testing
+- Layered Architecture
+- Repository Pattern
+- Service Layer
+- JWT Authentication
+- Role-Based Authorization
+- RESTful API Design
+- PostgreSQL
+- Alembic Database Migrations
+- Dockerized Application
+- Docker Compose Orchestration
+- Nginx Reverse Proxy
+- Unit Testing
+- Integration Testing
+- 68 Automated Tests
 
 ---
 
-# Future Improvements
+## Future Improvements
 
-* Comments on tickets
-* Audit logs
-* File attachments
-* Notifications
-* Docker support
-* CI/CD pipeline
-* Deployment to a cloud platform
+- Comments on Tickets
+- File Attachments
+- Activity Logs
+- Email Notifications
+- CI/CD Pipeline
+- AWS Deployment
+- Kubernetes Support
+- Redis Caching
+
+---
+
+## Docker Architecture
+
+```text
+                Browser
+                    │
+             localhost:80
+                    │
+                    ▼
+               Nginx Container
+                    │
+                    ▼
+         FastAPI/Uvicorn Container
+                    │
+                    ▼
+          PostgreSQL Container
+```
 
 ---
 
