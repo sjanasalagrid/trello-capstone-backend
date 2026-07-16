@@ -10,6 +10,7 @@ venv/
 # Environment Variables
 .env
 .env.docker
+.env.production
 
 # Alembic cache
 *.pyc
@@ -39,3 +40,4 @@ htmlcov/
 
 # Project Notes
 PROJECT_MASTER.md
+
