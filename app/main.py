@@ -22,3 +22,7 @@ def root():
     return {
         "message": "Trello Capstone API"
     }
+
+@app.get("/health")
+def health():
+    return {"status": "healthy"}
